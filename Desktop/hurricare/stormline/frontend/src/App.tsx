@@ -1,0 +1,651 @@
+import { useEffect, useState, useCallback, useRef } from 'react'
+import MapVisGlobe from './components/MapVisGlobe'
+import CoverageChoropleth from './components/CoverageChoropleth'
+import SimulationEngine from './components/SimulationEngine'
+import Leaderboard from './components/Leaderboard'
+import Dashboard3D from './components/Dashboard3D'
+import FundingDisparityGlobe from './components/mapvis/FundingDisparityGlobe'
+import NarrativePopup from './components/NarrativePopup'
+import CinematicIntro from './components/CinematicIntro'
+import HurricaneMatcher from './components/HurricaneMatcher'
+import PostSimulationMap from './components/PostSimulationMap'
+import BeginGameOverlay from './components/BeginGameOverlay'
+import ImmersivePanelOverlay from './components/ImmersivePanelOverlay'
+import { useStore } from './state/useStore'
+import axios from 'axios'
+import { ImpactEvent } from './hooks/useCinematicController'
+import AmbientProvider from './audio/AmbientProvider'
+import { useGlobalClickSounds } from './hooks/useGlobalClickSounds'
+import { playHover, playButtonPress } from './audio/SoundEngine'
+import TypewriterText from './components/TypewriterText'
+import { API_BASE } from './config'
+import { normalizeCoverage, normalizeHurricanes } from './utils/apiHelpers'
+
+function App() {
+  const {
+    hurricanes,
+    setHurricanes,
+    setCoverage,
+    coverage,
+    selectedHurricane,
+    setSelectedHurricane,
+    showSeverityOverlay,
+    showCoverageOverlay,
+    toggleSeverityOverlay,
+    toggleCoverageOverlay,
+    autoSpin,
+    setAutoSpin,
+    lastSimulationScore,
+    leaderboardOpen,
+    setLeaderboardOpen,
+    isCinematicPlaying,
+    setCinematicPlaying,
+    cinematicCompleted,
+    setCinematicCompleted,
+    narrativePopup,
+    setNarrativePopup,
+    showComparisonPage,
+    setShowComparisonPage,
+    postSimulationMapMode,
+    setPostSimulationMapMode,
+    gamePhase,
+    setGamePhase,
+    setGameFlowStep,
+    setGameTotalBudget,
+    setGameAllocations,
+    setGameClusterAllocations,
+    setComparisonData,
+  } = useStore()
+
+  const [loading, setLoading] = useState(true)
+  const [apiError, setApiError] = useState<string | null>(null)
+  const [gameStarted, setGameStarted] = useState(false)
+  const [browseTransition, setBrowseTransition] = useState(false)
+  const [showWelcomePopup, setShowWelcomePopup] = useState(false)
+  const welcomeShownRef = useRef(false) // Ensure welcome popup shows only ONCE
+  const [pendingHurricane, setPendingHurricane] = useState<string | null>(null)
+  const [showMatcher, setShowMatcher] = useState(false)
+  const [dashboardInitializing, setDashboardInitializing] = useState(false)
+
+  const sidebarRef = useRef<HTMLDivElement>(null)
+
+  // Sound: satisfying click on every button/interactive element
+  useGlobalClickSounds(true)
+  const [showFundingDisparity, setShowFundingDisparity] = useState(false)
+  const [disparityClosing, setDisparityClosing] = useState(false)
+  // Map transition: 'globe' | 'fading-out' | 'flat-entering' | 'flat'
+  const [mapPhase, setMapPhase] = useState<'globe' | 'fading-out' | 'flat-entering' | 'flat'>('globe')
+  const transitionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Trigger globe → flat map transition when cinematic completes
+  useEffect(() => {
+    if (cinematicCompleted && selectedHurricane && mapPhase === 'globe') {
+      setMapPhase('fading-out')
+      transitionTimerRef.current = setTimeout(() => {
+        setPostSimulationMapMode(true)
+        setMapPhase('flat-entering')
+        transitionTimerRef.current = setTimeout(() => {
+          setMapPhase('flat')
+        }, 900)
+      }, 600)
+    }
+    return () => {
+      if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current)
+    }
+  }, [cinematicCompleted, selectedHurricane])
+
+  // Reset to globe when selection is cleared
+  useEffect(() => {
+    if (!selectedHurricane && postSimulationMapMode) {
+      setPostSimulationMapMode(false)
+      setMapPhase('globe')
+    }
+  }, [selectedHurricane, postSimulationMapMode])
+
+  // When showComparisonPage becomes true, transition to sim-complete phase
+  // But ONLY if we're in pre-sim phase (not during game-flow, where results are inline)
+  useEffect(() => {
+    if (showComparisonPage && gamePhase === 'pre-sim') {
+      setGamePhase('sim-complete')
+    }
+  }, [showComparisonPage, gamePhase, setGamePhase])
+
+  // When game phase resets to pre-sim, reset comparison page
+  useEffect(() => {
+    if (gamePhase === 'pre-sim') {
+      setShowComparisonPage(false)
+    }
+  }, [gamePhase, setShowComparisonPage])
+
+  useEffect(() => {
+    const fetchHurricanes = async () => {
+      try {
+        const [hurricanesRes, coverageRes] = await Promise.all([
+          axios.get(`${API_BASE}/hurricanes`, { headers: { Accept: 'application/json' } }),
+          axios.get(`${API_BASE}/coverage`, { headers: { Accept: 'application/json' } }),
+        ])
+
+        if (!Array.isArray(hurricanesRes.data)) {
+          throw new Error(
+            `Hurricanes API returned ${typeof hurricanesRes.data} instead of JSON array. Check VITE_API_URL (${API_BASE}).`
+          )
+        }
+        if (!Array.isArray(coverageRes.data)) {
+          throw new Error(
+            `Coverage API returned ${typeof coverageRes.data} instead of JSON array. Check VITE_API_URL (${API_BASE}).`
+          )
+        }
+
+        setHurricanes(normalizeHurricanes(hurricanesRes.data))
+        setCoverage(normalizeCoverage(coverageRes.data))
+        setApiError(null)
+      } catch (error) {
+        console.error('Error fetching data:', error)
+        setHurricanes([])
+        setCoverage([])
+        setApiError(
+          error instanceof Error
+            ? error.message
+            : 'Could not load hurricane data. Verify the backend is running and VITE_API_URL is set correctly.'
+        )
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchHurricanes()
+  }, [setHurricanes, setCoverage])
+
+  const generateImpactEvents = (hurricane: any): ImpactEvent[] => {
+    const events: ImpactEvent[] = []
+    const track = hurricane.track || []
+
+    if (track.length === 0) return events
+
+    const eventIndices = [
+      Math.floor(track.length * 0.2),
+      Math.floor(track.length * 0.4),
+      Math.floor(track.length * 0.6),
+      Math.floor(track.length * 0.8),
+    ]
+
+    eventIndices.forEach((idx, i) => {
+      if (idx >= track.length) return
+      const point = track[idx]
+      const timeHours = idx * 6
+      const regionName = hurricane.affected_countries?.[0] || 'Affected Region'
+
+      events.push({
+        time_hours: timeHours,
+        location: {
+          name: `${regionName} - Track Point ${i + 1}`,
+          lat: point.lat,
+          lon: point.lon
+        },
+        impact: {
+          power_outages: Math.floor(Math.random() * 50000) + 10000,
+          evacuations: Math.floor(Math.random() * 20000) + 5000,
+          flooding_reported: point.wind > 100
+        }
+      })
+    })
+
+    return events
+  }
+
+  const handleHurricaneSelect = (hurricaneId: string) => {
+    if (selectedHurricane?.id === hurricaneId) {
+      setSelectedHurricane(null)
+      setCinematicPlaying(false)
+      setPendingHurricane(null)
+      setCinematicCompleted(false)
+      setPostSimulationMapMode(false)
+      setMapPhase('globe')
+      setGamePhase('pre-sim')
+    } else {
+      const hurricane = hurricanes.find(h => h.id === hurricaneId)
+      if (hurricane) {
+        setSelectedHurricane(hurricane)
+        setPendingHurricane(hurricaneId)
+        setCinematicCompleted(false)
+        setPostSimulationMapMode(false)
+        setMapPhase('globe')
+      }
+    }
+  }
+
+  // Load total budget when hurricane is selected (for game flow Step 2)
+  useEffect(() => {
+    if (selectedHurricane) {
+      const loadBudget = async () => {
+        try {
+          const budgetRes = await axios.get(`${API_BASE}/simulation/total-budget/${selectedHurricane.id}`)
+          setGameTotalBudget(budgetRes.data.total_budget || 50000000)
+        } catch {
+          const total = coverage
+            .filter(c => c.hurricane_id === selectedHurricane.id)
+            .reduce((sum, c) => sum + c.pooled_fund_budget, 0)
+          setGameTotalBudget(total || 50000000)
+        }
+      }
+      loadBudget()
+    }
+  }, [selectedHurricane, coverage, setGameTotalBudget])
+
+  const handleCinematicComplete = useCallback(() => {
+    setCinematicPlaying(false)
+    setCinematicCompleted(true)
+
+    if (pendingHurricane) {
+      const hurricane = hurricanes.find(h => h.id === pendingHurricane)
+      setSelectedHurricane(hurricane || null)
+      setPendingHurricane(null)
+      // Go directly to sim-complete (map + Begin Game) — no sidebar, no narrative popup
+      setPostSimulationMapMode(true)
+      setGamePhase('sim-complete')
+      // Reset allocations and comparison data for fresh game flow
+      setGameAllocations({})
+      setGameClusterAllocations({})
+      setComparisonData(null)
+    }
+  }, [pendingHurricane, hurricanes, setPostSimulationMapMode, setGamePhase, setGameAllocations, setComparisonData])
+
+  const handleClearSelection = () => {
+    setSelectedHurricane(null)
+    setPostSimulationMapMode(false)
+    setMapPhase('globe')
+    setCinematicCompleted(false)
+    setGamePhase('pre-sim')
+    setGameFlowStep(1)
+    setGameAllocations({})
+    setComparisonData(null)
+  }
+
+  const handleDashboardOption = (option: 'browse' | 'disparity') => {
+    if (option === 'browse') {
+      if (apiError || hurricanes.length === 0) {
+        setApiError(
+          apiError ||
+            'No hurricane data loaded yet. Confirm the backend is reachable and VITE_API_URL points to it.'
+        )
+        return
+      }
+      // Brief transition avoids WebGL context conflict between dashboard and main globe canvases
+      setBrowseTransition(true)
+      setTimeout(() => {
+        setGameStarted(true)
+        setBrowseTransition(false)
+        if (!welcomeShownRef.current) {
+          welcomeShownRef.current = true
+          setShowWelcomePopup(true)
+        }
+      }, 150)
+    } else if (option === 'disparity') {
+      setShowFundingDisparity(true)
+    }
+  }
+
+  const handleMatcherMatch = (hurricaneId: string) => {
+    setShowMatcher(false)
+    // Do NOT show welcome popup when using search — it was already shown on browse entry
+  }
+
+  const handleMatcherSkip = () => {
+    setShowMatcher(false)
+    // Do NOT show welcome popup on skip — it was already shown on browse entry
+  }
+
+  const handleCloseFundingDisparity = () => {
+    // Brief transition: unmount the Canvas first, then mount Dashboard3D
+    // Avoids WebGL context conflict between two Canvas instances
+    setDisparityClosing(true)
+    setTimeout(() => {
+      setShowFundingDisparity(false)
+      setDisparityClosing(false)
+    }, 100)
+  }
+
+  const handleReturnToMenu = () => {
+    // Clear all selections and return to the menu
+    setSelectedHurricane(null)
+    setPostSimulationMapMode(false)
+    setShowWelcomePopup(false)
+    setCinematicPlaying(false)
+    setCinematicCompleted(false)
+    setShowComparisonPage(false)
+    setGamePhase('pre-sim')
+    setGameFlowStep(1)
+    setGameAllocations({})
+    setGameClusterAllocations({})
+    setComparisonData(null)
+    setMapPhase('globe')
+    setShowMatcher(false)
+    setShowFundingDisparity(false)
+    // Trigger the initializing animation on dashboard re-entry
+    setDashboardInitializing(true)
+    // Return to dashboard - use minimal delay to ensure clean unmount/remount
+    setTimeout(() => {
+      setGameStarted(false)
+      // Clear initializing after dashboard has time to show it
+      setTimeout(() => setDashboardInitializing(false), 2500)
+    }, 50)
+  }
+
+  // Film grain + vignette overlays (always present for cinematic feel)
+  const postProcessingOverlays = (
+    <>
+      <div className="film-grain" />
+      <div className="vignette-overlay" />
+    </>
+  )
+
+  // Dashboard entry screen — always ensure visible and responsive
+  if (!gameStarted && !showFundingDisparity) {
+    if (browseTransition) {
+      return <div className="fixed inset-0 bg-[#020408]" />
+    }
+    return (
+      <>
+        <AmbientProvider />
+        <Dashboard3D
+          onSelectOption={handleDashboardOption}
+          onEnter={() => {}}
+          isLoading={loading || hurricanes.length === 0 || dashboardInitializing}
+        />
+        {apiError && (
+          <div className="fixed bottom-6 left-1/2 z-[60] max-w-xl -translate-x-1/2 rounded-md border border-red-400/30 bg-black/85 px-4 py-3 text-sm text-red-200">
+            {apiError}
+          </div>
+        )}
+        {postProcessingOverlays}
+      </>
+    )
+  }
+
+  // Funding disparity globe
+  if (showFundingDisparity) {
+    if (disparityClosing) {
+      return <div className="fixed inset-0 bg-[#020408]" />
+    }
+    return (
+      <>
+        <FundingDisparityGlobe onClose={handleCloseFundingDisparity} />
+        {postProcessingOverlays}
+      </>
+    )
+  }
+
+  const cinematicHurricane = pendingHurricane
+    ? hurricanes.find(h => h.id === pendingHurricane)
+    : null
+
+  const cinematicImpactEvents = cinematicHurricane
+    ? (cinematicHurricane.impact_events || generateImpactEvents(cinematicHurricane))
+    : []
+
+  const handleStartSimulation = () => {
+    if (selectedHurricane) {
+      setPendingHurricane(selectedHurricane.id)
+      setCinematicPlaying(true)
+      setCinematicCompleted(false)
+      setGamePhase('sim-running')
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PHASE B — Post-Simulation: map-only + "Begin Game" button
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (gamePhase === 'sim-complete') {
+    return (
+      <>
+        <AmbientProvider />
+        {/* Full-screen post-simulation map — ONLY visual */}
+        <div className="fixed inset-0 z-0 bg-black">
+          <PostSimulationMap transitionPhase="active" />
+        </div>
+
+        {/* Single "Begin Game" button — ONLY UI element */}
+        <BeginGameOverlay />
+        {postProcessingOverlays}
+      </>
+    )
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // GAME FLOW — Immersive step-by-step panels over blurred map
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (gamePhase === 'game-flow') {
+    return (
+      <>
+        <AmbientProvider />
+        {/* Background map — visible behind the blur */}
+        <div className="fixed inset-0 z-0 bg-black">
+          <PostSimulationMap transitionPhase="active" />
+        </div>
+
+        {/* Immersive panel overlay — blurs/dims background, shows panels */}
+        <ImmersivePanelOverlay />
+        {postProcessingOverlays}
+      </>
+    )
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PHASE A — Pre-simulation / Simulation Running
+  // ═══════════════════════════════════════════════════════════════════════════
+  return (
+    <>
+      <AmbientProvider />
+
+      {/* HurricaneMatcher — deferred search overlay (appears only when user clicks search bar) */}
+      {showMatcher && (
+        <div className="fixed inset-0 z-[60]" style={{ animation: 'matcherFadeIn 0.3s ease-out' }}>
+          <HurricaneMatcher
+            onMatchFound={handleMatcherMatch}
+            onSkip={handleMatcherSkip}
+          />
+        </div>
+      )}
+
+      {/* Cinematic Intro */}
+      {isCinematicPlaying && cinematicHurricane && (
+        <CinematicIntro
+          hurricane={cinematicHurricane}
+          impactEvents={cinematicImpactEvents}
+          onComplete={handleCinematicComplete}
+        />
+      )}
+
+      {/* Welcome Narrative */}
+      {showWelcomePopup && !isCinematicPlaying && (
+        <NarrativePopup
+          title="Welcome to HurriCare"
+          message="You are about to experience a humanitarian response simulation based on real historical hurricanes. Your mission: Allocate limited resources to save lives and reduce suffering. You'll compare your decisions against AI-optimized plans and actual historical responses. Select a hurricane from the left panel to begin your mission."
+          type="story"
+          onClose={() => setShowWelcomePopup(false)}
+          autoClose={0}
+        />
+      )}
+
+      <div
+        className="w-screen h-screen flex flex-col bg-black relative"
+        style={{
+          zIndex: 1,
+          pointerEvents: isCinematicPlaying ? 'none' : 'auto',
+          display: isCinematicPlaying ? 'none' : 'flex'
+        }}
+      >
+        {/* Header — near-black bg, hairline white border */}
+        <header className="bg-black/90 border-b border-white/[0.12] p-4 relative z-10">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <button
+                onClick={handleReturnToMenu}
+                className="text-4xl font-bold text-white font-rajdhani tracking-wider hover:text-white/80 hover:opacity-75 transition-all duration-300 cursor-pointer"
+                title="Return to menu"
+              >
+                HurriCare
+              </button>
+              {postSimulationMapMode && (
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded bg-white/[0.07] border border-white/[0.12]">
+                  <div className="w-2 h-2 rounded-full bg-red-400/80" />
+                  <span className="text-sm font-rajdhani text-white/70 tracking-wider uppercase">Analysis Mode</span>
+                </div>
+              )}
+              {/* Integrated HUD search bar — deferred search trigger */}
+              {!postSimulationMapMode && (
+                <button
+                  onClick={() => setShowMatcher(true)}
+                  className="flex items-center gap-2 px-4 py-2 rounded bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] hover:border-white/[0.15] transition-all duration-300 group ml-2"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/50 group-hover:text-white/70 transition">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.35-4.35" />
+                  </svg>
+                  <span className="text-sm font-mono text-white/50 group-hover:text-white/70 tracking-[0.15em] transition uppercase">
+                    SEARCH HURRICANES
+                  </span>
+                </button>
+              )}
+            </div>
+            <div className="flex items-center gap-4">
+              {!postSimulationMapMode && (
+                <label className="flex items-center gap-2 cursor-pointer text-white/80 hover:text-white transition">
+                  <input
+                    type="checkbox"
+                    checked={autoSpin}
+                    onChange={(e) => setAutoSpin(e.target.checked)}
+                    className="w-4 h-4 accent-white/50"
+                  />
+                  <span className="text-base font-rajdhani">Auto-rotate Globe</span>
+                </label>
+              )}
+              <label className="flex items-center gap-2 cursor-pointer text-white/80 hover:text-white transition">
+                <input
+                  type="checkbox"
+                  checked={showSeverityOverlay}
+                  onChange={toggleSeverityOverlay}
+                  className="w-4 h-4 accent-white/50"
+                />
+                <span className="text-base font-rajdhani">Severity Overlay</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer text-white/80 hover:text-white transition">
+                <input
+                  type="checkbox"
+                  checked={showCoverageOverlay}
+                  onChange={toggleCoverageOverlay}
+                  className="w-4 h-4 accent-white/50"
+                />
+                <span className="text-base font-rajdhani">Coverage Overlay</span>
+              </label>
+              <button
+                onClick={() => setLeaderboardOpen(true)}
+                className="px-4 py-2 rounded bg-white/[0.1] hover:bg-white/[0.18] text-white/90 text-base font-semibold font-rajdhani transition border border-white/[0.1]"
+              >
+                Daily Leaderboard
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <Leaderboard
+          isOpen={leaderboardOpen}
+          onClose={() => setLeaderboardOpen(false)}
+          lastScore={lastSimulationScore}
+        />
+
+        {/* Main Content */}
+        <div className="flex-1 flex overflow-hidden relative z-10">
+          {/* Left Sidebar — Hurricane Selection */}
+          <div ref={sidebarRef} className="w-72 bg-black/80 border-r border-white/[0.1] p-4 overflow-hidden flex flex-col">
+            <div className="flex items-center justify-between mb-4 flex-shrink-0">
+              <h2 className="text-2xl font-bold text-white font-rajdhani">Historical Hurricanes</h2>
+              {selectedHurricane && (
+                <button
+                  onClick={handleClearSelection}
+                  className="text-sm px-3 py-1.5 rounded bg-white/[0.1] hover:bg-white/[0.18] border border-white/[0.12] text-white/70 font-rajdhani transition"
+                  title="Clear Selection"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+            <div className="flex-1 overflow-y-auto space-y-2 pr-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent hover:scrollbar-thumb-white/40">
+              {hurricanes.map((hurricane) => (
+                <button
+                  key={hurricane.id}
+                  onClick={() => handleHurricaneSelect(hurricane.id)}
+                  className={`w-full text-left p-3 rounded border transition-all duration-300 font-rajdhani ${
+                    selectedHurricane?.id === hurricane.id
+                      ? 'border-white/30 bg-white/12 text-white'
+                      : 'border-white/[0.1] bg-black/40 text-white/80 hover:border-white/[0.18] hover:bg-white/[0.07] hover:text-white'
+                  }`}
+                >
+                  <div className="font-semibold text-lg">{hurricane.name}</div>
+                  <div className="text-base text-white/60 font-mono">
+                    {hurricane.year} &bull; Category {hurricane.max_category}
+                  </div>
+                  <div className="text-sm text-white/50 mt-1 font-mono">
+                    {hurricane.estimated_population_affected.toLocaleString()} affected
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {selectedHurricane && (
+              <div className="mt-4 p-4 bg-white/[0.07] border border-white/[0.1] rounded flex-shrink-0">
+                <h3 className="font-semibold text-lg mb-2 text-white/90 font-rajdhani">Selected Scenario</h3>
+                <div className="text-base space-y-1.5 text-white/70">
+                  <div><span className="font-medium text-white/80 font-rajdhani">Name:</span> <span className="font-mono">{selectedHurricane.name}</span></div>
+                  <div><span className="font-medium text-white/80 font-rajdhani">Year:</span> <span className="font-mono">{selectedHurricane.year}</span></div>
+                  <div><span className="font-medium text-white/80 font-rajdhani">Max Category:</span> <span className="font-mono">{selectedHurricane.max_category}</span></div>
+                  <div><span className="font-medium text-white/80 font-rajdhani">Affected:</span> <span className="font-mono">{selectedHurricane.affected_countries.join(', ')}</span></div>
+                  <div><span className="font-medium text-white/80 font-rajdhani">Population:</span> <span className="font-mono">{selectedHurricane.estimated_population_affected.toLocaleString()}</span></div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Center — Globe or Post-Simulation Map */}
+          <div className="flex-1 relative">
+            {/* Globe view (pre-simulation) */}
+            {!postSimulationMapMode && (
+              <div
+                className="w-full h-full"
+                style={{
+                  opacity: mapPhase === 'fading-out' ? 0 : 1,
+                  transition: 'opacity 0.6s ease-out',
+                }}
+              >
+                <MapVisGlobe
+                  selectedHurricane={selectedHurricane}
+                  autoSpin={autoSpin}
+                  onCountrySelect={(country) => console.log('Selected country:', country)}
+                  onHurricaneSelect={handleHurricaneSelect}
+                />
+                <CoverageChoropleth />
+              </div>
+            )}
+
+            {/* Flat tactical map (post-simulation) */}
+            {postSimulationMapMode && (
+              <PostSimulationMap
+                transitionPhase={mapPhase === 'flat-entering' ? 'entering' : 'active'}
+              />
+            )}
+          </div>
+
+          {/* Right Sidebar - Game Panel */}
+          <div className="w-96 bg-black/70 backdrop-blur-sm border-l border-white/[0.1] flex flex-col relative">
+            <div className="flex-1 overflow-hidden p-4">
+              <SimulationEngine onStartSimulation={handleStartSimulation} />
+            </div>
+          </div>
+        </div>
+      </div>
+      {postProcessingOverlays}
+    </>
+  )
+}
+
+export default App

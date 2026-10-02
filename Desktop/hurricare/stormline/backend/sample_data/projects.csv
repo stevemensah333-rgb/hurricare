@@ -1,0 +1,246 @@
+project_id,hurricane_id,country,admin1,cluster,budget_usd,beneficiaries,pooled_fund,implementing_partner
+USA_Education_001,katrina_2005,United States,Louisiana,Education,5000000,22963,False,Save the Children
+USA_Food Security_002,katrina_2005,United States,Alabama,Food Security,5000000,22016,True,Oxfam
+USA_Shelter_003,katrina_2005,United States,Mississippi,Shelter,4085960,27513,True,Save the Children
+USA_Education_004,katrina_2005,United States,Louisiana,Education,866421,10433,True,Save the Children
+USA_Education_005,katrina_2005,United States,Louisiana,Education,1000000,12947,True,UNICEF
+USA_Education_006,katrina_2005,United States,Florida,Education,15000000,83055,True,UNICEF
+USA_Health_007,katrina_2005,United States,Mississippi,Health,631264,5908,True,NGO A
+USA_Health_008,katrina_2005,United States,Mississippi,Health,5000000,20925,True,Red Cross
+USA_WASH_009,katrina_2005,United States,Florida,WASH,4848726,21068,True,Red Cross
+USA_Health_010,katrina_2005,United States,Alabama,Health,15000000,70427,False,World Vision
+USA_Protection_011,katrina_2005,United States,Alabama,Protection,939174,8743,True,World Vision
+USA_Education_012,katrina_2005,United States,Mississippi,Education,15000000,56674,True,Save the Children
+USA_Protection_013,katrina_2005,United States,Alabama,Protection,15000000,57072,True,NGO B
+USA_Protection_014,katrina_2005,United States,Mississippi,Protection,15000000,93233,True,Oxfam
+USA_Health_015,katrina_2005,United States,Louisiana,Health,5000000,23893,True,UNICEF
+USA_WASH_016,katrina_2005,United States,Louisiana,WASH,969653,7959,True,UNICEF
+USA_Protection_017,katrina_2005,United States,Florida,Protection,5000000,20722,True,World Vision
+USA_Protection_018,katrina_2005,United States,Alabama,Protection,11112369,104610,True,NGO B
+USA_WASH_019,katrina_2005,United States,Alabama,WASH,5000000,33981,False,NGO B
+USA_WASH_020,katrina_2005,United States,Alabama,WASH,15000000,145381,False,CARE
+USA_Shelter_021,katrina_2005,United States,Mississippi,Shelter,4824004,33952,True,NGO A
+USA_Health_022,katrina_2005,United States,Florida,Health,1000000,14361,True,World Vision
+USA_Food Security_023,katrina_2005,United States,Mississippi,Food Security,15000000,54912,True,World Vision
+USA_WASH_024,katrina_2005,United States,Florida,WASH,346113,4801,True,Red Cross
+USA_Shelter_025,katrina_2005,United States,Alabama,Shelter,15000000,62669,True,Red Cross
+USA_Livelihoods_026,sandy_2012,United States,New York,Livelihoods,5000000,40394,True,UNICEF
+USA_Education_027,sandy_2012,United States,New Jersey,Education,5000000,34113,True,CARE
+USA_Protection_028,sandy_2012,United States,Maryland,Protection,1000000,7404,True,NGO A
+USA_Shelter_029,sandy_2012,United States,Delaware,Shelter,103969,1079,False,Save the Children
+USA_Education_030,sandy_2012,United States,Connecticut,Education,3821173,24089,True,World Vision
+USA_Protection_031,sandy_2012,United States,Maryland,Protection,5000000,24565,True,World Vision
+USA_Livelihoods_032,sandy_2012,United States,Connecticut,Livelihoods,5000000,61512,True,Save the Children
+USA_Protection_033,sandy_2012,United States,Maryland,Protection,2252471,11424,False,UNICEF
+USA_Shelter_034,sandy_2012,United States,New Jersey,Shelter,5000000,47880,True,CARE
+USA_WASH_035,sandy_2012,United States,Delaware,WASH,1000000,10598,True,Red Cross
+USA_WASH_036,sandy_2012,United States,New Jersey,WASH,3083921,24663,True,Oxfam
+USA_Protection_037,sandy_2012,United States,Delaware,Protection,5000000,27128,True,NGO B
+USA_Education_038,sandy_2012,United States,New Jersey,Education,5000000,62073,True,Save the Children
+USA_Protection_039,sandy_2012,United States,New Jersey,Protection,3985550,26186,False,Oxfam
+USA_Shelter_040,sandy_2012,United States,Connecticut,Shelter,1000000,7272,False,Oxfam
+USA_Protection_041,sandy_2012,United States,New York,Protection,15000000,145036,True,Save the Children
+USA_Health_042,sandy_2012,United States,Connecticut,Health,1000000,7556,False,World Vision
+USA_Livelihoods_043,sandy_2012,United States,New Jersey,Livelihoods,5000000,47016,True,NGO A
+USA_WASH_044,sandy_2012,United States,Maryland,WASH,15000000,79985,True,NGO B
+USA_Food Security_045,sandy_2012,United States,Delaware,Food Security,5000000,35833,False,Red Cross
+USA_Health_046,sandy_2012,United States,Delaware,Health,375032,5853,False,Red Cross
+USA_Shelter_047,sandy_2012,United States,New Jersey,Shelter,5000000,23652,True,Oxfam
+USA_Livelihoods_048,sandy_2012,United States,New Jersey,Livelihoods,5000000,49329,False,UNICEF
+USA_Education_049,sandy_2012,United States,Connecticut,Education,5000000,25291,False,Oxfam
+USA_Livelihoods_050,sandy_2012,United States,Maryland,Livelihoods,5000000,23516,True,NGO A
+USA_Shelter_051,sandy_2012,United States,New York,Shelter,5000000,35990,False,NGO A
+USA_Livelihoods_052,sandy_2012,United States,Maryland,Livelihoods,15000000,58614,True,World Vision
+USA_Education_053,sandy_2012,United States,New York,Education,172987,2075,True,World Vision
+USA_Protection_054,sandy_2012,United States,Delaware,Protection,2369808,16404,True,UNICEF
+USA_Livelihoods_055,sandy_2012,United States,New York,Livelihoods,2639556,22764,True,CARE
+PR_Livelihoods_001,maria_2017,Puerto Rico,Puerto Rico,Livelihoods,1000000,10506,True,Save the Children
+PR_Health_002,maria_2017,Dominican Republic,Dominican Republic,Health,15000000,124504,False,World Vision
+PR_Protection_003,maria_2017,Dominica,Dominica,Protection,5000000,20523,True,World Vision
+PR_Food Security_004,maria_2017,Dominican Republic,Dominican Republic,Food Security,11542227,76224,True,World Vision
+PR_Energy_005,maria_2017,Dominican Republic,Dominican Republic,Energy,15000000,58954,True,NGO A
+PR_Health_006,maria_2017,Dominica,Dominica,Health,365274,3670,True,Save the Children
+PR_Food Security_007,maria_2017,Puerto Rico,Puerto Rico,Food Security,5000000,32318,True,CARE
+PR_Protection_008,maria_2017,Dominican Republic,Dominican Republic,Protection,1000000,10945,True,World Vision
+PR_Livelihoods_009,maria_2017,Dominica,Dominica,Livelihoods,15000000,57195,False,NGO B
+PR_Livelihoods_010,maria_2017,Dominican Republic,Dominican Republic,Livelihoods,15000000,68660,True,Save the Children
+PR_Health_011,maria_2017,Dominican Republic,Dominican Republic,Health,15000000,59869,True,NGO B
+PR_Livelihoods_012,maria_2017,Puerto Rico,Puerto Rico,Livelihoods,5000000,30046,False,Save the Children
+PR_Education_013,maria_2017,Puerto Rico,Puerto Rico,Education,15000000,77396,True,CARE
+PR_Education_014,maria_2017,Dominican Republic,Dominican Republic,Education,5000000,20748,True,CARE
+PR_Energy_015,maria_2017,Dominican Republic,Dominican Republic,Energy,777611,7661,True,NGO A
+PR_Energy_016,maria_2017,Dominican Republic,Dominican Republic,Energy,1000000,9749,True,World Vision
+PR_Energy_017,maria_2017,Dominica,Dominica,Energy,1000000,15726,True,NGO A
+PR_Livelihoods_018,maria_2017,Dominican Republic,Dominican Republic,Livelihoods,15000000,143624,False,CARE
+PR_Protection_019,maria_2017,Dominican Republic,Dominican Republic,Protection,15000000,133663,True,UNICEF
+PR_Livelihoods_020,maria_2017,Dominican Republic,Dominican Republic,Livelihoods,5000000,50385,True,NGO A
+PR_Education_021,maria_2017,Puerto Rico,Puerto Rico,Education,3406144,14920,True,NGO A
+PR_WASH_022,maria_2017,Dominican Republic,Dominican Republic,WASH,5000000,31220,True,Save the Children
+PR_WASH_023,maria_2017,Dominica,Dominica,WASH,5000000,20953,True,World Vision
+PR_Livelihoods_024,maria_2017,Puerto Rico,Puerto Rico,Livelihoods,5000000,33666,True,CARE
+PR_Health_025,maria_2017,Puerto Rico,Puerto Rico,Health,15000000,56760,False,CARE
+PR_Food Security_026,maria_2017,Dominica,Dominica,Food Security,15000000,55900,False,Oxfam
+PR_Shelter_027,maria_2017,Puerto Rico,Puerto Rico,Shelter,15000000,60547,False,Save the Children
+PR_Food Security_028,maria_2017,Puerto Rico,Puerto Rico,Food Security,15000000,51922,False,Oxfam
+USA_Food Security_001,harvey_2017,United States,Texas,Food Security,199942,1772,False,World Vision
+USA_Education_002,harvey_2017,United States,Texas,Education,3628214,27713,True,NGO A
+USA_Food Security_003,harvey_2017,United States,Texas,Food Security,4586993,30456,True,UNICEF
+USA_Food Security_004,harvey_2017,United States,Louisiana,Food Security,5000000,42014,True,Red Cross
+USA_Education_005,harvey_2017,United States,Texas,Education,1262335,10714,True,NGO A
+USA_Health_006,harvey_2017,United States,Louisiana,Health,5000000,20100,False,Save the Children
+USA_Health_007,harvey_2017,United States,Texas,Health,5000000,29001,True,UNICEF
+USA_Food Security_008,harvey_2017,United States,Louisiana,Food Security,1000000,10533,True,NGO A
+USA_Food Security_009,harvey_2017,United States,Louisiana,Food Security,1000000,10921,True,UNICEF
+USA_Education_010,harvey_2017,United States,Texas,Education,2515631,27956,True,Save the Children
+USA_Shelter_011,harvey_2017,United States,Texas,Shelter,15000000,97407,False,Save the Children
+USA_Food Security_012,harvey_2017,United States,Texas,Food Security,5000000,25738,True,NGO B
+USA_Food Security_013,harvey_2017,United States,Louisiana,Food Security,1000000,8949,True,Red Cross
+USA_Shelter_014,harvey_2017,United States,Louisiana,Shelter,5000000,20354,True,CARE
+USA_WASH_015,harvey_2017,United States,Louisiana,WASH,704117,6353,False,CARE
+USA_Education_016,harvey_2017,United States,Texas,Education,296809,4899,True,CARE
+USA_Food Security_017,harvey_2017,United States,Texas,Food Security,15000000,94036,False,CARE
+USA_WASH_018,harvey_2017,United States,Texas,WASH,15000000,52621,True,Save the Children
+USA_Health_019,harvey_2017,United States,Texas,Health,5000000,32376,True,UNICEF
+USA_Education_020,harvey_2017,United States,Texas,Education,1000000,8195,True,UNICEF
+USA_WASH_021,harvey_2017,United States,Louisiana,WASH,15000000,111180,True,World Vision
+USA_Shelter_022,harvey_2017,United States,Texas,Shelter,1000000,10705,True,UNICEF
+PHL_WASH_001,haiyan_2013,Philippines,Samar,WASH,624147,4307,True,Red Cross
+PHL_Shelter_002,haiyan_2013,Philippines,Samar,Shelter,126230,2414,True,Red Cross
+PHL_Food Security_003,haiyan_2013,Philippines,Cebu,Food Security,1000000,6701,True,World Vision
+PHL_Protection_004,haiyan_2013,Philippines,Palawan,Protection,1000000,7498,False,ActionAid
+PHL_Shelter_005,haiyan_2013,Philippines,Samar,Shelter,15000000,59697,True,CARE
+PHL_Livelihoods_006,haiyan_2013,Philippines,Palawan,Livelihoods,14837247,115612,True,Red Cross
+PHL_Protection_007,haiyan_2013,Philippines,Samar,Protection,4997584,20506,True,CARE
+PHL_WASH_008,haiyan_2013,Philippines,Leyte,WASH,5000000,22276,True,World Vision
+PHL_Health_009,haiyan_2013,Philippines,Samar,Health,5000000,24119,True,CARE
+PHL_Education_010,haiyan_2013,Philippines,Bohol,Education,1000000,8161,True,Plan International
+PHL_Health_011,haiyan_2013,Philippines,Leyte,Health,5000000,34673,False,UNICEF
+PHL_Food Security_012,haiyan_2013,Philippines,Bohol,Food Security,3145026,37450,True,NGO A
+PHL_Protection_013,haiyan_2013,Philippines,Cebu,Protection,3672071,21494,True,NGO B
+PHL_Shelter_014,haiyan_2013,Philippines,Palawan,Shelter,4152929,27557,True,CARE
+PHL_Livelihoods_015,haiyan_2013,Philippines,Bohol,Livelihoods,5000000,23433,False,World Vision
+PHL_Livelihoods_016,haiyan_2013,Philippines,Leyte,Livelihoods,5000000,43001,False,Save the Children
+PHL_Shelter_017,haiyan_2013,Philippines,Samar,Shelter,10349273,51946,True,ActionAid
+PHL_WASH_018,haiyan_2013,Philippines,Leyte,WASH,15000000,56843,True,UNICEF
+PHL_Shelter_019,haiyan_2013,Philippines,Bohol,Shelter,11820862,65376,True,World Vision
+PHL_Livelihoods_020,haiyan_2013,Philippines,Leyte,Livelihoods,15000000,98224,False,Oxfam
+PHL_Health_021,haiyan_2013,Philippines,Samar,Health,1000000,9712,True,Plan International
+PHL_Livelihoods_022,haiyan_2013,Philippines,Palawan,Livelihoods,451851,7583,True,World Vision
+PHL_WASH_023,haiyan_2013,Philippines,Cebu,WASH,15000000,97774,True,NGO A
+PHL_Protection_024,haiyan_2013,Philippines,Bohol,Protection,15000000,73707,False,UNICEF
+PHL_Shelter_025,haiyan_2013,Philippines,Cebu,Shelter,15000000,51782,True,Red Cross
+PHL_WASH_026,haiyan_2013,Philippines,Samar,WASH,5000000,60794,True,World Vision
+PHL_WASH_027,haiyan_2013,Philippines,Palawan,WASH,875618,15020,False,Save the Children
+PHL_Livelihoods_028,haiyan_2013,Philippines,Samar,Livelihoods,1000000,8127,True,NGO B
+PHL_Education_029,haiyan_2013,Philippines,Cebu,Education,15000000,76397,True,UNICEF
+PHL_Health_030,haiyan_2013,Philippines,Samar,Health,15000000,50780,False,CARE
+PHL_Protection_031,haiyan_2013,Philippines,Cebu,Protection,1000000,14400,False,Plan International
+PHL_Food Security_032,haiyan_2013,Philippines,Samar,Food Security,15000000,78508,True,Oxfam
+PHL_Education_033,haiyan_2013,Philippines,Leyte,Education,5000000,33679,True,CARE
+PHL_Food Security_034,haiyan_2013,Philippines,Leyte,Food Security,1000000,9113,False,NGO B
+PHL_Protection_035,haiyan_2013,Philippines,Leyte,Protection,5000000,20236,True,NGO A
+BHS_WASH_001,dorian_2019,Bahamas,New Providence,WASH,15000000,107881,True,NGO A
+BHS_WASH_002,dorian_2019,United States,North Carolina,WASH,5000000,25620,True,Oxfam
+BHS_Education_003,dorian_2019,United States,North Carolina,Education,1000000,11239,True,NGO A
+BHS_WASH_004,dorian_2019,United States,North Carolina,WASH,5000000,38377,True,World Vision
+BHS_Food Security_005,dorian_2019,United States,North Carolina,Food Security,15000000,93047,False,NGO B
+BHS_Education_006,dorian_2019,Bahamas,New Providence,Education,4714509,48780,True,Red Cross
+BHS_Food Security_007,dorian_2019,United States,North Carolina,Food Security,15000000,102561,True,Save the Children
+BHS_WASH_008,dorian_2019,Bahamas,Grand Bahama,WASH,5000000,23322,False,CARE
+BHS_Health_009,dorian_2019,United States,Florida,Health,1000000,11311,False,NGO A
+BHS_WASH_010,dorian_2019,United States,Florida,WASH,5000000,31189,False,NGO A
+BHS_Protection_011,dorian_2019,Bahamas,New Providence,Protection,1000000,10268,False,Red Cross
+BHS_Food Security_012,dorian_2019,United States,Florida,Food Security,15000000,73562,True,Red Cross
+BHS_WASH_013,dorian_2019,Bahamas,Grand Bahama,WASH,5000000,23355,True,Save the Children
+BHS_Education_014,dorian_2019,United States,North Carolina,Education,1000000,6992,True,World Vision
+BHS_Education_015,dorian_2019,Bahamas,Grand Bahama,Education,15000000,93614,False,Oxfam
+BHS_Protection_016,dorian_2019,Bahamas,Abaco,Protection,10422309,90802,True,UNICEF
+BHS_Shelter_017,dorian_2019,Bahamas,Grand Bahama,Shelter,711393,6245,True,Save the Children
+BHS_Protection_018,dorian_2019,United States,North Carolina,Protection,1000000,10095,False,Save the Children
+CAR_Shelter_001,irma_2017,Barbuda,Barbuda,Shelter,2500000,18500,True,IFRC
+CAR_WASH_002,irma_2017,Barbuda,Barbuda,WASH,1200000,12000,True,UNICEF
+CAR_Health_003,irma_2017,Cuba,Cuba,Health,850000,9500,True,PAHO
+CAR_Food_004,irma_2017,United States,Florida,Food Security,3500000,45000,False,Red Cross
+CAR_Protection_005,irma_2017,Barbuda,Saint Martin,Protection,1800000,8700,True,UN Women
+CAR_Shelter_006,irma_2017,United States,Georgia,Shelter,2200000,15000,False,Save the Children
+CAR_Education_007,irma_2017,Cuba,Cuba,Education,900000,7500,True,UNICEF
+USA_Shelter_001,michael_2018,United States,Florida,Shelter,5200000,35000,False,Red Cross
+USA_Health_002,michael_2018,United States,Florida,Health,3100000,22000,False,FEMA
+USA_Food_003,michael_2018,United States,Georgia,Food Security,2800000,28000,False,Feeding America
+USA_WASH_004,michael_2018,United States,Alabama,WASH,1500000,18000,False,Red Cross
+USA_Protection_005,michael_2018,United States,Florida,Protection,2000000,12000,False,Save the Children
+USA_Shelter_001,florence_2018,United States,North Carolina,Shelter,8500000,65000,False,Red Cross
+USA_Food_002,florence_2018,United States,North Carolina,Food Security,4200000,48000,False,Feeding America
+USA_WASH_003,florence_2018,United States,South Carolina,WASH,3100000,32000,False,FEMA
+USA_Health_004,florence_2018,United States,Virginia,Health,2000000,18000,False,Red Cross
+USA_Protection_005,florence_2018,United States,North Carolina,Protection,1800000,15000,False,Save the Children
+USA_Shelter_001,ida_2021,United States,Louisiana,Shelter,12000000,85000,False,Red Cross
+USA_Food_002,ida_2021,United States,Louisiana,Food Security,6500000,72000,False,Feeding America
+USA_Health_003,ida_2021,United States,Mississippi,Health,3200000,28000,False,FEMA
+USA_WASH_004,ida_2021,United States,Alabama,WASH,2800000,35000,False,Red Cross
+USA_Shelter_001,ian_2022,United States,Florida,Shelter,15000000,120000,False,Red Cross
+USA_Food_002,ian_2022,United States,Florida,Food Security,8000000,95000,False,Feeding America
+USA_WASH_003,ian_2022,United States,South Carolina,WASH,3500000,28000,False,FEMA
+USA_Health_004,ian_2022,United States,North Carolina,Health,2500000,22000,False,Red Cross
+PRI_Shelter_001,fiona_2022,Puerto Rico,Puerto Rico,Shelter,4500000,38000,True,IFRC
+PRI_WASH_002,fiona_2022,Dominican Republic,Dominican Republic,WASH,2800000,25000,True,UNICEF
+PRI_Food_003,fiona_2022,Puerto Rico,Puerto Rico,Food Security,3200000,42000,True,WFP
+PRI_Health_004,fiona_2022,Canada,Nova Scotia,Health,1500000,12000,False,Red Cross
+MMR_Health_001,cyclone_nargis_2008,Myanmar,Ayeyarwady,Health,4000000,150000,True,WHO
+MMR_Health_002,cyclone_nargis_2008,Myanmar,Yangon,Health,1875000,120000,True,UNICEF
+MMR_Shelter_003,cyclone_nargis_2008,Myanmar,Ayeyarwady,Shelter,3500000,85000,True,IOM
+MMR_WASH_004,cyclone_nargis_2008,Myanmar,Bago,WASH,2800000,95000,True,UNICEF
+MMR_Food_005,cyclone_nargis_2008,Myanmar,Ayeyarwady,Food Security,4500000,200000,True,WFP
+MMR_Protection_006,cyclone_nargis_2008,Myanmar,Mon,Protection,1800000,65000,True,UNHCR
+MMR_Shelter_007,cyclone_nargis_2008,Myanmar,Yangon,Shelter,650000,45000,True,IOM
+VUT_Shelter_001,cyclone_pam_2015,Vanuatu,Shefa,Shelter,3200000,42000,True,IFRC
+VUT_WASH_002,cyclone_pam_2015,Vanuatu,Tafea,WASH,2100000,28000,True,UNICEF
+VUT_Food_003,cyclone_pam_2015,Vanuatu,Malampa,Food Security,1800000,35000,True,WFP
+VUT_Health_004,cyclone_pam_2015,Vanuatu,Shefa,Health,1200000,18000,True,WHO
+PHL_Food_001,typhoon_mangkhut_2018,Philippines,Cagayan,Food Security,4500000,85000,True,WFP
+PHL_Shelter_002,typhoon_mangkhut_2018,Philippines,Ilocos Norte,Shelter,3200000,52000,True,IFRC
+PHL_WASH_003,typhoon_mangkhut_2018,China,Guangdong,WASH,2000000,45000,False,Red Cross
+PHL_Health_004,typhoon_mangkhut_2018,China,Hong Kong,Health,1500000,28000,False,Red Cross
+MOZ_Shelter_001,cyclone_idai_2019,Mozambique,Sofala,Shelter,5500000,95000,True,IFRC
+MOZ_WASH_002,cyclone_idai_2019,Mozambique,Manica,WASH,3800000,72000,True,UNICEF
+MOZ_Health_003,cyclone_idai_2019,Mozambique,Zambezia,Health,4200000,85000,True,WHO
+MOZ_Food_004,cyclone_idai_2019,Zimbabwe,Chimanimani,Food Security,3500000,65000,True,WFP
+MOZ_Protection_005,cyclone_idai_2019,Mozambique,Sofala,Protection,2800000,48000,True,UNHCR
+PHL_Shelter_001,typhoon_goni_2020,Philippines,Albay,Shelter,4800000,78000,True,IFRC
+PHL_Food_002,typhoon_goni_2020,Philippines,Camarines Sur,Food Security,3500000,65000,True,WFP
+PHL_WASH_003,typhoon_goni_2020,Philippines,Quezon,WASH,2200000,42000,True,UNICEF
+PHL_Health_004,typhoon_goni_2020,Philippines,Bicol,Health,1800000,35000,True,WHO
+IND_Shelter_001,cyclone_amphan_2020,India,West Bengal,Shelter,5500000,95000,True,IFRC
+IND_Food_002,cyclone_amphan_2020,Bangladesh,Bangladesh,Food Security,4200000,120000,True,WFP
+IND_WASH_003,cyclone_amphan_2020,India,Odisha,WASH,3000000,55000,True,UNICEF
+IND_Health_004,cyclone_amphan_2020,India,Kolkata,Health,2500000,42000,True,WHO
+MOZ_WASH_001,cyclone_freddy_2023,Mozambique,Nampula,WASH,3500000,65000,True,UNICEF
+MOZ_Health_002,cyclone_freddy_2023,Mozambique,Zambezia,Health,2800000,48000,True,WHO
+MWI_Food_003,cyclone_freddy_2023,Malawi,Blantyre,Food Security,3200000,72000,True,WFP
+MWI_Shelter_004,cyclone_freddy_2023,Malawi,Chikwawa,Shelter,2500000,45000,True,IFRC
+MOZ_Protection_005,cyclone_freddy_2023,Mozambique,Nampula,Protection,1800000,32000,True,UNHCR
+GRD_Shelter_001,beryl_2024,Grenada,Grenada,Shelter,1500000,15000,True,IFRC
+GRD_WASH_002,beryl_2024,Grenada,Grenada,WASH,800000,12000,True,UNICEF
+JAM_Food_003,beryl_2024,Jamaica,Jamaica,Food Security,2500000,40500,True,WFP
+JAM_Shelter_004,beryl_2024,Jamaica,Jamaica,Shelter,1400000,11500,True,IFRC
+USA_Protection_005,beryl_2024,United States,Texas,Protection,5000000,35000,False,Red Cross
+BRB_Health_006,beryl_2024,Barbados,Barbados,Health,500000,8000,True,PAHO
+MEX_Shelter_007,beryl_2024,Mexico,Quintana Roo,Shelter,2000000,25000,False,Red Cross
+USA_Shelter_001,helene_2024,United States,North Carolina,Shelter,15000000,120000,False,Red Cross
+USA_Food_002,helene_2024,United States,North Carolina,Food Security,8500000,95000,False,Feeding America
+USA_Health_003,helene_2024,United States,Florida,Health,5000000,45000,False,Red Cross
+USA_WASH_004,helene_2024,United States,Georgia,WASH,3500000,38000,False,FEMA
+USA_Protection_005,helene_2024,United States,South Carolina,Protection,2500000,22000,False,Save the Children
+USA_Shelter_006,helene_2024,United States,Tennessee,Shelter,3000000,28000,False,Red Cross
+USA_Shelter_001,milton_2024,United States,Florida,Shelter,18000000,150000,False,Red Cross
+USA_Food_002,milton_2024,United States,Florida,Food Security,9500000,110000,False,Feeding America
+USA_Health_003,milton_2024,United States,Florida,Health,6000000,55000,False,Red Cross
+CUB_WASH_004,milton_2024,Cuba,Cuba,WASH,2000000,25000,True,UNICEF
+JAM_Food_001,melissa_2025,Jamaica,Jamaica,Food Security,8500000,180000,True,WFP
+JAM_Shelter_002,melissa_2025,Jamaica,Jamaica,Shelter,12000000,95000,True,IFRC
+HTI_Health_003,melissa_2025,Haiti,Haiti,Health,4500000,65000,True,WHO
+HTI_WASH_004,melissa_2025,Haiti,Haiti,WASH,3200000,48000,True,UNICEF
+CUB_Food_005,melissa_2025,Cuba,Cuba,Food Security,5000000,181000,True,WFP
+CUB_Shelter_006,melissa_2025,Cuba,Cuba,Shelter,3500000,120000,True,IFRC
+DOM_Protection_007,melissa_2025,Dominican Republic,Dominican Republic,Protection,1800000,25000,True,UNHCR
+JAM_Protection_008,melissa_2025,Jamaica,Jamaica,Protection,2500000,35000,True,UN Women
